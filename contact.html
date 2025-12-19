@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>контакты</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+        <div class="cont">
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="header">
+                <a href="index.html" class="logo-link">
+                    <img class="logo_1" src="img/logo1.png" alt="Логотип">
+                </a>
+                <div class="nav-links">
+                    <a class="links" href="services.html"><p class="head_text1">услуги</p></a>
+                    <a class="links" href="contact.html"><p class="head_text1">контакты</p></a>
+                    <a class="links" href="asq.html"><p class="head_text1">вопросы</p></a>
+                    <a class="links" href="cases.html"><p class="head_text1">кейсы</p></a>
+                    <a class="links" href="feedback.html"><p class="head_text1">отзывы</p></a>
+                </div>
+            </div>
+            
+            <div class="line1"></div>
+
+            <div class="header_2">
+                <p class="main_txt1">контакты — начало работы</p>
+            </div>
+        </div>
+        <div class="container">
+        <div class="block6">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A20f3afe21823fad8c157a107d4b172a5fb9ef5cccb3ab29404a724b6e5a7464c&amp;width=608&amp;height=494&amp;lang=ru_RU&amp;scroll=true"></script>
+        
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2 class="contact-title">СВЯЖИТЕСЬ СО МНОЙ</h2>
+            
+            <div class="contact-details">
+                <div class="contact-item">
+                    <div class="contact-text">
+                        <h3>телефон</h3>
+                        <p>+7 (495) 999-99-99</p>
+                        <p class="contact-note">с 10:00 до 20:00 по московскому времени</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-text">
+                        <h3>еmail</h3>
+                        <p>info@smm.ru</p>
+                        <p class="contact-note">Отвечаю в течение 24 часов</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-text">
+                        <h3>адрес</h3>
+                        <p>Москва, ул. Валовая, 44/2</p>
+                        <p class="contact-note">Работаю удаленно по всему миру</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-text">
+                        <h3>Часы работы</h3>
+                        <p>Пн-Пт: 10:00 - 20:00</p>
+                        <p>Сб: 11:00 - 16:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+
+</div>
+            <div class="footer">
+        <div class="footer1">
+                <a href="index.html" class="logo-link">
+                    <img class="logo_1" src="img/logo.png" alt="Логотип">
+                </a>
+                <div class="nav-links">
+                    <a class="links" href="services.html"><p class="head_text">услуги</p></a>
+                    <a class="links" href="contact.html"><p class="head_text">контакты</p></a>
+                     <a class="links" href="asq.html"><p class="head_text">вопросы</p></a>
+                </div>
+        </div>
+        <p class="fot1">info@smm.ru<br>
+            +7 (495) 999-99-99
+        </p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    menuBtn.classList.toggle('active');
+                });
+                
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        menuBtn.classList.remove('active');
+                    });
+                });
+            }
+                    });
+    </script>
+</body>
+</html>

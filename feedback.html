@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .review-card {
+            height: 430px;
+            width: 300px;
+            background-color: #FCFAFA;
+            border-radius: 30px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .review-card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .review-author {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 15px 0;
+            color: #3B3B3B;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .review-text {
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .review-date {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .review-form-container {
+            margin: 80px auto 40px auto;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+        
+        .review-form {
+            background-color: #FCFAFA;
+            border-radius: 30px;
+            padding: 40px;
+            
+    border: 2px solid #3B3B3B;
+        }
+        
+        .review-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #3B3B3B;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: "Playfair Display SC", serif;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 18px;
+            color: #3B3B3B;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 90%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3B3B3B;
+            box-shadow: 0 0 0 3px rgba(59, 59, 59, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background-color: #3B3B3B;
+            color: #FCFAFA;
+            border: none;
+            border-radius: 30px;
+            font-family: "Playfair Display SC", serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 59, 59, 0.3);
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-thank-you {
+            background-color: #FCFAFA;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #3B3B3B;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .thank-you-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3B3B3B;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .thank-you-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #3B3B3B;
+            color: #FCFAFA;
+            border: none;
+            border-radius: 30px;
+            font-family: "Playfair Display SC", serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .thank-you-button:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 59, 59, 0.3);
+        }
+        
+        /* Адаптивность для карточек отзывов */
+        .block_5 {
+            margin-top: 60px;
+        }
+        
+        .block5 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 0 auto;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        
+        @media (max-width: 1200px) {
+            .block5 {
+                max-width: 900px;
+                gap: 30px;
+            }
+            
+            .review-card {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .block5 {
+                max-width: 800px;
+            }
+            
+            .review-card {
+                width: 320px;
+                height: 400px;
+            }
+            
+            .review-author {
+                font-size: 22px;
+                min-height: 50px;
+            }
+            
+            .review-text {
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .block5 {
+                flex-direction: column;
+                gap: 30px;
+                max-width: 500px;
+            }
+            
+            .review-card {
+                width: 100%;
+                max-width: 400px;
+                height: 380px;
+            }
+            
+            .review-form {
+                padding: 30px;
+            }
+            
+            .review-title {
+                font-size: 28px;
+            }
+            
+            .form-input,
+            .form-textarea {
+                padding: 14px 16px;
+            }
+            
+            .modal-thank-you {
+                padding: 30px;
+                max-width: 90%;
+            }
+            
+            .thank-you-icon {
+                font-size: 50px;
+            }
+            
+            .thank-you-title {
+                font-size: 24px;
+            }
+            
+            .thank-you-text {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .block5 {
+                max-width: 400px;
+                gap: 25px;
+            }
+            
+            .review-card {
+                height: 360px;
+                max-width: 320px;
+            }
+            
+            .review-author {
+                font-size: 20px;
+            }
+            
+            .review-text {
+                font-size: 14px;
+            }
+            
+            .review-date {
+                font-size: 13px;
+            }
+            
+            .review-form {
+                padding: 25px;
+            }
+            
+            .review-title {
+                font-size: 24px;
+            }
+            
+            .modal-thank-you {
+                padding: 25px;
+                max-width: 95%;
+            }
+            
+            .thank-you-title {
+                font-size: 22px;
+            }
+            
+            .thank-you-text {
+                font-size: 15px;
+            }
+            
+            .thank-you-button {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .block5 {
+                max-width: 320px;
+                gap: 20px;
+            }
+            
+            .review-card {
+                height: 340px;
+                max-width: 280px;
+            }
+            
+            .review-author {
+                font-size: 18px;
+            }
+            
+            .review-text {
+                font-size: 13px;
+            }
+        }
+        
+        /* Стили для заголовка отзывов */
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+        
+        .reviews-subtitle {
+            font-size: 20px;
+            color: #555;
+            margin-top: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="header">
+            <a href="index.html" class="logo-link">
+                <img class="logo_1" src="img/logo1.png" alt="Логотип">
+            </a>
+            <div class="nav-links">
+                <a class="links" href="services.html"><p class="head_text1">услуги</p></a>
+                <a class="links" href="contact.html"><p class="head_text1">контакты</p></a>
+                <a class="links" href="asq.html"><p class="head_text1">вопросы</p></a>
+                <a class="links" href="cases.html"><p class="head_text1">кейсы</p></a>
+                <a class="links" href="feedback.html"><p class="head_text1">отзывы</p></a>
+            </div>
+        </div>
+        
+        <div class="line1"></div>
+
+        <div class="header_2">
+            <p class="main_txt1">ваше мнение для нас важно</p>
+        </div>
+
+    </div>
+
+    <div class="block_5">
+        <div class="block5">
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Лидия</p>
+                    <p class="review-text">Сменили контент под новый фирменный стиль компании, подняли охваты.</p>
+                    <p class="review-date">15 марта 2024</p>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Михаил</p>
+                    <p class="review-text">Супер специалист! Все по договоренности, очень приятный человек. Продолжаем сотрудничество в долгосрочном формате</p>
+                    <p class="review-date">10 марта 2024</p>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Екатерина</p>
+                    <p class="review-text">Тот самый редкий случай, когда находишь специалиста-и он просто без лишних хлопот выполняет работу заданную и работу сверх</p>
+                    <p class="review-date">5 марта 2024</p>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Дмитрий</p>
+                    <p class="review-text">Спасибо большое все понравилось. Работаем дальше. Рекомендую специалиста с удовольствием.</p>
+                    <p class="review-date">28 февраля 2024</p>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Ольга</p>
+                    <p class="review-text">Отличный специалист. Высокий профессионал. Всем рекомендую !</p>
+                    <p class="review-date">20 февраля 2024</p>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-card-content">
+                    <p class="review-author">Сергей</p>
+                    <p class="review-text">Я настоятельно рекомендую этого SMM-специалиста всем, кто хочет добиться успеха в социальных сетях. Обладает не только глубокими знаниями и опытом, но и творческим подходом</p>
+                    <p class="review-date">15 февраля 2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-form-container">
+        <div class="review-form">
+            <h2 class="review-title">Оставьте ваш отзыв</h2>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label class="form-label" for="userName">Ваше имя:</label>
+                    <input type="text" id="userName" class="form-input" placeholder="Введите ваше имя" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userReview">Ваш отзыв:</label>
+                    <textarea id="userReview" class="form-textarea" placeholder="Поделитесь вашими впечатлениями о работе с нами..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitReview">Отправить отзыв</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="thankYouModal">
+        <div class="modal-thank-you">
+            <button class="modal-close" id="thankYouModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h2 class="thank-you-title">Спасибо за ваш отзыв!</h2>
+            <p class="thank-you-text">После проверки модератором Ваш отзыв появится на сайте!</p>
+            <button class="thank-you-button" id="closeThankYouBtn">Закрыть</button>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer1">
+            <a href="index.html" class="logo-link">
+                <img class="logo_1" src="img/logo.png" alt="Логотип">
+            </a>
+            <div class="nav-links">
+                <a class="links" href="services.html"><p class="head_text">услуги</p></a>
+                <a class="links" href="contact.html"><p class="head_text">контакты</p></a>
+                <a class="links" href="asq.html"><p class="head_text">вопросы</p></a>
+            </div>
+        </div>
+        <p class="fot1">info@smm.ru<br>
+            +7 (495) 999-99-99
+        </p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    menuBtn.classList.toggle('active');
+                });
+                
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        menuBtn.classList.remove('active');
+                    });
+                });
+            }
+
+            // Модальное окно благодарности за отзыв
+            const thankYouModal = document.getElementById('thankYouModal');
+            const thankYouModalClose = document.getElementById('thankYouModalClose');
+            const closeThankYouBtn = document.getElementById('closeThankYouBtn');
+            const reviewForm = document.getElementById('reviewForm');
+            
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const userName = document.getElementById('userName').value.trim();
+                    const userReview = document.getElementById('userReview').value.trim();
+                    
+                    if (!userName || !userReview) {
+                        alert('Пожалуйста, заполните все поля');
+                        return;
+                    }
+                    
+                    // Показываем модальное окно благодарности
+                    thankYouModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Очищаем форму
+                    reviewForm.reset();
+                });
+            }
+            
+            function closeThankYouModal() {
+                thankYouModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            thankYouModalClose.addEventListener('click', closeThankYouModal);
+            closeThankYouBtn.addEventListener('click', closeThankYouModal);
+            
+            thankYouModal.addEventListener('click', function(e) {
+                if (e.target === thankYouModal) {
+                    closeThankYouModal();
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && thankYouModal.classList.contains('active')) {
+                    closeThankYouModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

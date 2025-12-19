@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>услуги</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background-color: #FCFAFA;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #3B3B3B;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3B3B3B;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .modal-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .modal-contact {
+            background-color: #f5f5f5;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .modal-contact-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #3B3B3B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .modal-contact-info {
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        .modal-contact-info a {
+            color: #3B3B3B;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .modal-contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .modal-button {
+            display: block;
+            padding: 18px;
+            background-color: #3B3B3B;
+            color: #FCFAFA;
+            border: none;
+            border-radius: 30px;
+            font-family: "Playfair Display SC", serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .modal-button:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 59, 59, 0.3);
+        }
+        
+        .card {
+            height: 500px;
+            width: 350px;
+            background-color: #FCFAFA;
+            border-radius: 30px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .card1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .txt3 {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 20px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .card1 p {
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .choose {
+            height: 50px;
+            width: 200px;
+            border-radius: 30px;
+            background-color: #FCFAFA;
+            border: 2px solid #3B3B3B;
+            font-family: "Playfair Display SC", serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #3B3B3B;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin-top: auto;
+        }
+        
+        .choose:hover {
+            background-color: #3B3B3B;
+            color: #FCFAFA;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 59, 59, 0.2);
+        }
+        
+        .block5 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 60px auto;
+            max-width: 1200px;
+            justify-content: center;
+            align-items: start;
+        }
+        
+        @media (max-width: 1200px) {
+            .block5 {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 380px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .block5 {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 40px auto;
+                gap: 30px;
+            }
+            
+            .card {
+                height: 480px;
+                max-width: 100%;
+            }
+            
+            .txt3 {
+                font-size: 24px;
+                min-height: 70px;
+            }
+            
+            .card1 p {
+                font-size: 16px;
+            }
+            
+            .choose {
+                height: 45px;
+                width: 180px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .block5 {
+                max-width: 320px;
+                gap: 25px;
+            }
+            
+            .card {
+                height: 450px;
+            }
+            
+            .txt3 {
+                font-size: 22px;
+                min-height: 60px;
+            }
+            
+            .card1 p {
+                font-size: 15px;
+            }
+            
+            .choose {
+                height: 42px;
+                width: 160px;
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .modal {
+                padding: 30px 25px;
+                max-width: 90%;
+            }
+            
+            .modal-title {
+                font-size: 24px;
+            }
+            
+            .modal-content {
+                font-size: 16px;
+            }
+            
+            .modal-contact {
+                padding: 20px;
+            }
+            
+            .modal-contact-title {
+                font-size: 18px;
+            }
+            
+            .modal-contact-info {
+                font-size: 16px;
+            }
+            
+            .modal-button {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal {
+                padding: 25px 20px;
+                max-width: 95%;
+            }
+            
+            .modal-title {
+                font-size: 22px;
+            }
+            
+            .modal-content {
+                font-size: 15px;
+            }
+            
+            .modal-contact {
+                padding: 15px;
+            }
+            
+            .modal-contact-title {
+                font-size: 17px;
+            }
+            
+            .modal-contact-info {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="header">
+            <a href="index.html" class="logo-link">
+                <img class="logo_1" src="img/logo1.png" alt="Логотип">
+            </a>
+            <div class="nav-links">
+                <a class="links" href="services.html"><p class="head_text1">услуги</p></a>
+                <a class="links" href="contact.html"><p class="head_text1">контакты</p></a>
+                <a class="links" href="asq.html"><p class="head_text1">вопросы</p></a>
+                <a class="links" href="cases.html"><p class="head_text">кейсы</p></a>
+                <a class="links" href="feedback.html"><p class="head_text1">отзывы</p></a>
+            </div>
+        </div>
+        
+        <div class="line1"></div>
+
+        <div class="header_2">
+            <p class="main_txt1">услуги, которые работают</p>
+        </div>
+    </div>
+
+    <div class="block_5">
+        <div class="block5">
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">ПОЛНОЕ ВЕДЕНИЕ: ГОЛОС И РОСТ</p>
+                    <p>создание ежемесячного контент-плана в едином стиле<br><br>
+                        глубокий анализ текущих соцсетей и конкурентов<br><br>
+                        анализ эффективности и ежемесячный отчет с рекомендациями
+                    </p>
+                    <button class="choose" data-service="Полное ведение: голос и рост">выбрать</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">СТРАТЕГИЯ И ЗАПУСК</p>
+                    <p>разработка контент-стратегии на 6 месяцев.<br><br>
+                        создание библиотеки шаблонов для будущих постов<br><br>
+                        настройка базовой аналитики
+                    </p>
+                    <button class="choose" data-service="Стратегия и запуск">выбрать</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">ПРОДАЮЩИЕ ИСТОРИИ</p>
+                    <p>разработка нарративной стратегии на 3 месяца с акцентом на сторителлинг<br><br>
+                        адаптация контента под специфику каждой платформы<br><br>
+                        анализ вовлеченности по типам контента
+                    </p>
+                    <button class="choose" data-service="Продающие истории">выбрать</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">DIGITAL-ФУНДАМЕНТ</p>
+                    <p>комплексный аудит текущего положения бренда в соцсетях<br><br>
+                        разработка карты коммуникаций и тона голоса бренда<br><br>
+                        создание системы хештегов и принципов работы с UGC
+                    </p>
+                    <button class="choose" data-service="Digital-фундамент">выбрать</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">ТАРГЕТИРОВАННОЕ ПРОДВИЖЕНИЕ</p>
+                    <p>разработка креативной концепции для рекламных кампаний<br><br>
+                        сегментация аудитории и тестирование гипотез<br><br>
+                        оптимизация кампаний по стоимости лида и конверсии
+                    </p>
+                    <button class="choose" data-service="Таргетированное продвижение">выбрать</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card1">
+                    <p class="txt3">SMM-АВТОМАТИЗАЦИЯ</p>
+                    <p>внедрение системы контент-планирования (Trello/Notion)<br><br>
+                        настройка автоматизации публикаций<br><br>
+                        создание базы часто задаваемых вопросов и шаблонов ответов
+                    </p>
+                    <button class="choose" data-service="SMM-автоматизация">выбрать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title" id="modalServiceTitle">ПОЛНОЕ ВЕДЕНИЕ: ГОЛОС И РОСТ</h2>
+            <div class="modal-content">
+                для получения подробной информации о тарифах, условиях сотрудничества и индивидуальной консультации, пожалуйста, свяжитесь с нашим менеджером
+            </div>
+
+                    <p><i class="fas fa-envelope"></i> Email: info@smm.ru</p>
+                    <p><i class="fas fa-phone"></i> Телефон: +7 (495) 999-99-99</p>
+                    <p><i class="fas fa-clock"></i> Время работы: Пн-Пт 10:00-20:00</p>
+
+            <a href="contact.html" class="modal-button">Перейти в контакты</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer1">
+            <a href="index.html" class="logo-link">
+                <img class="logo_1" src="img/logo.png" alt="Логотип">
+            </a>
+            <div class="nav-links">
+                <a class="links" href="services.html"><p class="head_text">услуги</p></a>
+                <a class="links" href="contact.html"><p class="head_text">контакты</p></a>
+                <a class="links" href="asq.html"><p class="head_text">вопросы</p></a>
+                    <a class="links" href="cases.html"><p class="head_text1">кейсы</p></a>
+            </div>
+        </div>
+        <p class="fot1">info@smm.ru<br>
+            +7 (495) 999-99-99
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    menuBtn.classList.toggle('active');
+                });
+                
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        menuBtn.classList.remove('active');
+                    });
+                });
+            }
+            
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const modalServiceTitle = document.getElementById('modalServiceTitle');
+            const chooseButtons = document.querySelectorAll('.choose');
+            
+            chooseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceName = this.getAttribute('data-service');
+                    modalServiceTitle.textContent = serviceName;
+                    modalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            modalClose.addEventListener('click', function() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    modalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
